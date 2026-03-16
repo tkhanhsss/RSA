@@ -90,10 +90,10 @@ export default function BobPanel() {
         )}
       </StepCard>
 
-      {/* Bước 2: SHA-256 file nhận được → H_B */}
+      {/* Bước 2: SHA-256 file nhận được → H(M') */}
       <StepCard
         number="2"
-        title="Băm file nhận được bằng SHA-256 → H_B"
+        title="Băm file nhận được bằng SHA-256 → H(M')"
         active={transmitted && !hashHB && isValid === null}
         done={!!hashHB}
         theme="green"
@@ -101,7 +101,7 @@ export default function BobPanel() {
         {hashHB ? (
           <div className="space-y-1.5">
             <HashBox
-              label={`H_B = SHA-256(file_nhận${tampered ? "_bị_sửa" : ""})`}
+              label={`H(M') = SHA-256(file_nhận${tampered ? "_bị_sửa" : ""})`}
               value={hashHB}
               colorClass={tampered ? "text-red-300" : "text-green-300"}
             />
@@ -113,15 +113,15 @@ export default function BobPanel() {
           </div>
         ) : (
           <p className="text-xs text-gray-500 italic">
-            H_B sẽ hiển thị sau khi xác minh
+            H(M') sẽ hiển thị sau khi xác minh
           </p>
         )}
       </StepCard>
 
-      {/* Bước 3: Giải mã chữ ký → H_A gốc */}
+      {/* Bước 3: Giải mã chữ ký → H(M) gốc */}
       <StepCard
         number="3"
-        title="Giải mã Chữ ký bằng Khóa công khai → H_A gốc"
+        title="Giải mã Chữ ký bằng Khóa công khai → H(M) gốc"
         active={transmitted && !hashHARecovered && isValid === null}
         done={!!hashHARecovered}
         theme="green"
@@ -129,26 +129,26 @@ export default function BobPanel() {
         {hashHARecovered ? (
           <div className="space-y-1.5">
             <HashBox
-              label="H_A = RSA_Decrypt(Signature, PublicKey_Alice)"
+              label="H(M) = RSA_Decrypt(Signature, PublicKey_Alice)"
               value={hashHARecovered}
               colorClass="text-blue-300"
             />
             <p className="text-xs text-gray-500 flex items-center gap-1.5">
               <Unlock className="w-3 h-3 text-green-400 flex-shrink-0" />
-              Khôi phục H_A gốc mà Alice đã tạo ra khi ký
+              Khôi phục H(M) gốc mà Alice đã tạo ra khi ký
             </p>
           </div>
         ) : (
           <p className="text-xs text-gray-500 italic">
-            H_A gốc sẽ hiển thị sau khi xác minh
+            H(M) gốc sẽ hiển thị sau khi xác minh
           </p>
         )}
       </StepCard>
 
-      {/* Bước 4: So sánh H_A và H_B → kết luận */}
+      {/* Bước 4: So sánh H(M) và H(M') → kết luận */}
       <StepCard
         number="4"
-        title="So sánh H_A và H_B → Kết luận"
+        title="So sánh H(M) và H(M') → Kết luận"
         active={transmitted && isValid === null}
         done={isValid !== null}
         theme="green"
@@ -168,11 +168,11 @@ export default function BobPanel() {
           </button>
         ) : (
           <div className="space-y-3">
-            {/* Bảng so sánh H_A vs H_B */}
+            {/* Bảng so sánh H(M) vs H(M') */}
             <div className="grid grid-cols-2 gap-2 text-xs">
               <div className="bg-gray-800 rounded-lg p-2.5 border border-blue-900/50">
                 <div className="text-gray-400 mb-1 font-medium">
-                  H_A (từ chữ ký)
+                  H(M) (từ chữ ký)
                 </div>
                 <div className="font-mono text-blue-300 break-all">
                   {truncate(hashHARecovered, 16, 0)}...
@@ -182,7 +182,7 @@ export default function BobPanel() {
                 className={`bg-gray-800 rounded-lg p-2.5 border ${isValid ? "border-green-900/50" : "border-red-900/50"}`}
               >
                 <div className="text-gray-400 mb-1 font-medium">
-                  H_B (từ file)
+                  H(M') (từ file)
                 </div>
                 <div
                   className={`font-mono break-all ${isValid ? "text-green-300" : "text-red-300"}`}
@@ -200,7 +200,7 @@ export default function BobPanel() {
                 <>
                   <CheckCircle className="w-10 h-10 text-green-400 mx-auto mb-2" />
                   <p className="font-bold text-green-300 text-lg font-mono">
-                    H_A = H_B
+                    H(M) = H(M')
                   </p>
                   <p className="text-green-300 font-bold text-base mt-1">
                     ✅ Chữ ký HỢP LỆ
@@ -213,7 +213,7 @@ export default function BobPanel() {
                 <>
                   <XCircle className="w-10 h-10 text-red-400 mx-auto mb-2" />
                   <p className="font-bold text-red-300 text-lg font-mono">
-                    H_A ≠ H_B
+                    H(M) ≠ H(M')
                   </p>
                   <p className="text-red-300 font-bold text-base mt-1">
                     ❌ Chữ ký KHÔNG HỢP LỆ

@@ -75,10 +75,10 @@ export default function AlicePanel() {
         </label>
       </StepCard>
 
-      {/* Bước 2: SHA-256 — H_A */}
+      {/* Bước 2: SHA-256 — H(M) */}
       <StepCard
         number="2"
-        title="Băm tài liệu bằng SHA-256 → H_A"
+        title="Băm tài liệu bằng SHA-256 → H(M)"
         active={!!aliceFile && !hashHA}
         done={!!hashHA}
         theme="blue"
@@ -86,17 +86,15 @@ export default function AlicePanel() {
         {hashHA ? (
           <div className="space-y-1.5">
             <HashBox
-              label="H_A = SHA-256(file_hợp_đồng)"
+              label="H(M) = SHA-256(file_hợp_đồng)"
               value={hashHA}
               colorClass="text-blue-300"
             />
-            <p className="text-xs text-gray-500">
-              256-bit · 64 ký tự hex · duy nhất cho nội dung này
-            </p>
+            <p className="text-xs text-gray-500">256-bit · 64 ký tự hex</p>
           </div>
         ) : (
           <p className="text-xs text-gray-500 italic">
-            H_A sẽ hiển thị sau khi nhấn ký tài liệu
+            H(M) sẽ hiển thị sau khi nhấn ký tài liệu
           </p>
         )}
       </StepCard>
@@ -104,7 +102,7 @@ export default function AlicePanel() {
       {/* Bước 3: Ký tài liệu — Chữ ký số */}
       <StepCard
         number="3"
-        title="Mã hóa H_A bằng Khóa bí mật → Chữ ký"
+        title="Mã hóa H(M) bằng Khóa bí mật → Chữ ký"
         active={!!aliceFile && !signature}
         done={!!signature}
         theme="blue"
@@ -137,7 +135,7 @@ export default function AlicePanel() {
             </div>
             <p className="text-xs text-gray-500 flex items-center gap-1.5">
               <Lock className="w-3 h-3 text-purple-400 flex-shrink-0" />
-              Signature = RSA_Encrypt(H_A, PrivateKey_Alice)
+              Signature = RSA_Encrypt(H(M), PrivateKey_Alice)
             </p>
           </div>
         )}
