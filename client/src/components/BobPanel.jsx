@@ -7,22 +7,25 @@ import {
   XCircle,
   RefreshCw,
 } from "lucide-react";
+import { useAppContext } from "../context/AppContext";
 import StepCard from "./StepCard";
 import HashBox from "./HashBox";
 import { truncate } from "../utils/truncate";
 
-export default function BobPanel({
-  transmitted,
-  tampered,
-  aliceFile,
-  signature,
-  hashHB,
-  hashHARecovered,
-  isValid,
-  verifyLoading,
-  onVerify,
-  onReset,
-}) {
+export default function BobPanel() {
+  const {
+    transmitted,
+    tampered,
+    aliceFile,
+    signature,
+    hashHB,
+    hashHARecovered,
+    isValid,
+    verifyLoading,
+    verifySignature,
+    resetDemo,
+  } = useAppContext();
+
   return (
     <div className="lg:col-span-5 bg-gray-900 border border-green-900/40 rounded-2xl p-5 space-y-3">
       <div className="flex items-center gap-3 mb-1">
@@ -39,7 +42,7 @@ export default function BobPanel({
         </div>
       </div>
 
-      {/* Step 1 */}
+      {/* Bước 1: Nhận file + chữ ký từ Alice */}
       <StepCard
         number="1"
         title="Nhận file hợp đồng + Chữ ký từ Alice"
@@ -87,7 +90,7 @@ export default function BobPanel({
         )}
       </StepCard>
 
-      {/* Step 2 */}
+      {/* Bước 2: SHA-256 file nhận được → H_B */}
       <StepCard
         number="2"
         title="Băm file nhận được bằng SHA-256 → H_B"
@@ -115,7 +118,7 @@ export default function BobPanel({
         )}
       </StepCard>
 
-      {/* Step 3 */}
+      {/* Bước 3: Giải mã chữ ký → H_A gốc */}
       <StepCard
         number="3"
         title="Giải mã Chữ ký bằng Khóa công khai → H_A gốc"
@@ -142,7 +145,7 @@ export default function BobPanel({
         )}
       </StepCard>
 
-      {/* Step 4 */}
+      {/* Bước 4: So sánh H_A và H_B → kết luận */}
       <StepCard
         number="4"
         title="So sánh H_A và H_B → Kết luận"
@@ -152,7 +155,7 @@ export default function BobPanel({
       >
         {isValid === null ? (
           <button
-            onClick={onVerify}
+            onClick={verifySignature}
             disabled={!transmitted || verifyLoading}
             className="w-full bg-green-600 hover:bg-green-500 disabled:opacity-40 text-white font-bold py-2.5 rounded-lg flex items-center justify-center gap-2 text-sm transition-colors"
           >
@@ -165,6 +168,7 @@ export default function BobPanel({
           </button>
         ) : (
           <div className="space-y-3">
+            {/* Bảng so sánh H_A vs H_B */}
             <div className="grid grid-cols-2 gap-2 text-xs">
               <div className="bg-gray-800 rounded-lg p-2.5 border border-blue-900/50">
                 <div className="text-gray-400 mb-1 font-medium">
@@ -188,6 +192,7 @@ export default function BobPanel({
               </div>
             </div>
 
+            {/* Kết luận — hợp lệ hoặc không hợp lệ */}
             <div
               className={`rounded-xl p-5 text-center border-2 transition-all ${isValid ? "bg-green-950/40 border-green-600" : "bg-red-950/40 border-red-600"}`}
             >
@@ -221,8 +226,9 @@ export default function BobPanel({
               )}
             </div>
 
+            {/* Nút reset để thử lại */}
             <button
-              onClick={onReset}
+              onClick={resetDemo}
               className="w-full bg-gray-700 hover:bg-gray-600 text-gray-200 font-medium py-2 rounded-lg text-sm transition-colors flex items-center justify-center gap-2"
             >
               <RefreshCw className="w-3.5 h-3.5" />

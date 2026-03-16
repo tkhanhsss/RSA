@@ -1,18 +1,21 @@
 import { FileText, Upload, Lock, RefreshCw } from "lucide-react";
+import { useAppContext } from "../context/AppContext";
 import StepCard from "./StepCard";
 import HashBox from "./HashBox";
 import { truncate } from "../utils/truncate";
 
-export default function AlicePanel({
-  keysGenerated,
-  aliceFile,
-  hashHA,
-  signature,
-  signLoading,
-  fileInputRef,
-  onFileChange,
-  onSign,
-}) {
+export default function AlicePanel() {
+  const {
+    keysGenerated,
+    aliceFile,
+    hashHA,
+    signature,
+    signLoading,
+    fileInputRef,
+    handleFileChange,
+    signDocument,
+  } = useAppContext();
+
   return (
     <div className="lg:col-span-5 bg-gray-900 border border-blue-900/40 rounded-2xl p-5 space-y-3">
       <div className="flex items-center gap-3 mb-1">
@@ -29,7 +32,7 @@ export default function AlicePanel({
         </div>
       </div>
 
-      {/* Step 1 */}
+      {/* Bước 1: Upload file */}
       <StepCard
         number="1"
         title="Upload file hợp đồng"
@@ -66,13 +69,13 @@ export default function AlicePanel({
             ref={fileInputRef}
             type="file"
             className="hidden"
-            onChange={onFileChange}
+            onChange={handleFileChange}
             disabled={!keysGenerated}
           />
         </label>
       </StepCard>
 
-      {/* Step 2 */}
+      {/* Bước 2: SHA-256 — H_A */}
       <StepCard
         number="2"
         title="Băm tài liệu bằng SHA-256 → H_A"
@@ -98,7 +101,7 @@ export default function AlicePanel({
         )}
       </StepCard>
 
-      {/* Step 3 */}
+      {/* Bước 3: Ký tài liệu — Chữ ký số */}
       <StepCard
         number="3"
         title="Mã hóa H_A bằng Khóa bí mật → Chữ ký"
@@ -108,7 +111,7 @@ export default function AlicePanel({
       >
         {!signature ? (
           <button
-            onClick={onSign}
+            onClick={signDocument}
             disabled={!aliceFile || !keysGenerated || signLoading}
             className="w-full bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-bold py-2.5 rounded-lg flex items-center justify-center gap-2 text-sm transition-colors"
           >

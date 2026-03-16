@@ -1,12 +1,10 @@
 import { Send, AlertTriangle, ChevronRight } from "lucide-react";
+import { useAppContext } from "../context/AppContext";
 
-export default function TransmitChannel({
-  signature,
-  transmitted,
-  tampered,
-  onSend,
-  onToggleTamper,
-}) {
+export default function TransmitChannel() {
+  const { signature, transmitted, tampered, sendToBob, handleToggleTamper } =
+    useAppContext();
+
   return (
     <div className="lg:col-span-1 flex lg:flex-col items-center justify-center gap-3 px-2 py-4">
       <div className="text-center hidden lg:block">
@@ -14,6 +12,7 @@ export default function TransmitChannel({
         <p className="text-xs text-gray-600 leading-tight">truyền</p>
       </div>
 
+      {/* Đường truyền — đổi màu khi đã gửi */}
       <div className="hidden lg:flex flex-col items-center gap-1">
         <div
           className={`w-px h-6 transition-colors duration-500 ${transmitted ? "bg-purple-500" : "bg-gray-700"}`}
@@ -26,8 +25,9 @@ export default function TransmitChannel({
         />
       </div>
 
+      {/* Nút Gửi */}
       <button
-        onClick={onSend}
+        onClick={sendToBob}
         disabled={!signature}
         className={`flex lg:flex-col items-center gap-1.5 font-bold py-2 px-3 rounded-xl text-xs transition-all shadow ${
           signature
@@ -39,6 +39,7 @@ export default function TransmitChannel({
         <span>Gửi</span>
       </button>
 
+      {/* Toggle giả lập tấn công MITM */}
       <div className="flex lg:flex-col items-center gap-1.5">
         <p className="text-xs text-gray-500 text-center leading-tight hidden lg:block">
           Giả lập
@@ -46,7 +47,7 @@ export default function TransmitChannel({
           tấn công
         </p>
         <button
-          onClick={onToggleTamper}
+          onClick={handleToggleTamper}
           disabled={!signature}
           title="Bật để giả lập kẻ tấn công sửa nội dung file trước khi Bob nhận"
           className={`relative w-11 h-6 rounded-full transition-colors duration-300 disabled:opacity-30 focus:outline-none ${

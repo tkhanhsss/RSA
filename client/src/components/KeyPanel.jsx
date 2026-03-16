@@ -1,12 +1,10 @@
 import { Key, Unlock, Lock, RefreshCw } from "lucide-react";
+import { useAppContext } from "../context/AppContext";
 
-export default function KeyPanel({
-  keysGenerated,
-  keysLoading,
-  publicKey,
-  privateKey,
-  onGenerateKeys,
-}) {
+export default function KeyPanel() {
+  const { keysGenerated, keysLoading, publicKey, privateKey, generateKeys } =
+    useAppContext();
+
   return (
     <div className="bg-gray-900 border border-gray-800 rounded-2xl p-5">
       <div className="flex items-center justify-between flex-wrap gap-3 mb-4">
@@ -19,7 +17,7 @@ export default function KeyPanel({
           </h2>
         </div>
         <button
-          onClick={onGenerateKeys}
+          onClick={generateKeys}
           disabled={keysLoading}
           className="bg-yellow-500 hover:bg-yellow-400 disabled:opacity-50 text-gray-900 font-bold px-5 py-2 rounded-lg flex items-center gap-2 text-sm transition-colors shadow"
         >
@@ -34,6 +32,7 @@ export default function KeyPanel({
 
       {keysGenerated ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Khóa công khai — chia sẻ với Bob */}
           <div className="bg-gray-800 rounded-xl p-4 border border-blue-900/40">
             <div className="flex items-center gap-2 mb-2">
               <Unlock className="w-4 h-4 text-blue-400" />
@@ -51,6 +50,8 @@ export default function KeyPanel({
               className="w-full bg-gray-950 text-xs font-mono text-gray-300 rounded-lg p-2.5 resize-none border border-gray-700 outline-none"
             />
           </div>
+
+          {/* Khóa bí mật — chỉ Alice giữ */}
           <div className="bg-gray-800 rounded-xl p-4 border border-red-900/40">
             <div className="flex items-center gap-2 mb-2">
               <Lock className="w-4 h-4 text-red-400" />
