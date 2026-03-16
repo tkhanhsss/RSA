@@ -35,7 +35,7 @@ export default function AlicePanel() {
       {/* Bước 1: Upload file */}
       <StepCard
         number="1"
-        title="Upload file"
+        title="Upload file tài liệu"
         active={keysGenerated}
         done={!!aliceFile}
         theme="blue"
@@ -86,7 +86,7 @@ export default function AlicePanel() {
         {hashHA ? (
           <div className="space-y-1.5">
             <HashBox
-              label="H(M) = SHA-256(file)"
+              label="H(M) = SHA-256(file_gửi)"
               value={hashHA}
               colorClass="text-blue-300"
             />

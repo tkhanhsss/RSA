@@ -129,7 +129,7 @@ export default function BobPanel() {
         {hashHARecovered ? (
           <div className="space-y-1.5">
             <HashBox
-              label="H(M) = RSA_Decrypt(Signature, PublicKey_Alice)"
+              label="H(M) = RSA_Verify(Signature, PublicKey_Alice)"
               value={hashHARecovered}
               colorClass="text-blue-300"
             />
@@ -206,7 +206,7 @@ export default function BobPanel() {
                     ✅ Chữ ký hợp lệ
                   </p>
                   <p className="text-xs text-gray-400 mt-2 leading-relaxed">
-                    File tài liệu còn nguyên vẹn, xác nhận chắc chắn do Alice ký
+                    File tài liệu còn nguyên vẹn, xác nhận do Alice ký
                   </p>
                 </>
               ) : (
