@@ -1,27 +1,12 @@
-/**
- * AppContext.jsx
- * ─────────────────────────────────────────────────────────────────────────────
- * Quản lý toàn bộ state và business-logic của ứng dụng Demo Chữ Ký Số RSA.
- *
- * Cách dùng trong component con:
- *   import { useAppContext } from "../context/AppContext";
- *   const { publicKey, generateKeys, ... } = useAppContext();
- */
-
 import { createContext, useContext, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
-// ─── 1. Tạo Context ───────────────────────────────────────────────────────────
-// createContext() tạo ra một "kênh" để truyền dữ liệu xuống toàn bộ cây UI
-// mà không cần truyền props qua từng tầng component trung gian.
 const AppContext = createContext(null);
 
 // Địa chỉ gốc của API backend
 const API = "/api/rsa";
 
-// ─── 2. AppProvider ───────────────────────────────────────────────────────────
-// Component "wrapper" — bọc toàn bộ ứng dụng trong main.jsx.
-// Mọi component con bên trong đều có thể đọc dữ liệu từ context này.
+// AppProvider
 export function AppProvider({ children }) {
   // ── State: Quản lý khóa ───────────────────────────────────────────────────
   const [publicKey, setPublicKey] = useState("");
@@ -30,9 +15,9 @@ export function AppProvider({ children }) {
   const [keysLoading, setKeysLoading] = useState(false);
 
   // ── State: Phía Alice (người ký) ──────────────────────────────────────────
-  const [aliceFile, setAliceFile] = useState(null);    // File object đã chọn
-  const [hashHA, setHashHA] = useState("");             // SHA-256 của file gốc
-  const [signature, setSignature] = useState("");       // Chữ ký số dạng hex
+  const [aliceFile, setAliceFile] = useState(null); // File object đã chọn
+  const [hashHA, setHashHA] = useState(""); // SHA-256 của file gốc
+  const [signature, setSignature] = useState(""); // Chữ ký số dạng hex
   const [signLoading, setSignLoading] = useState(false);
 
   // ref để reset <input type="file"> về rỗng sau khi gọi resetDemo()
@@ -40,12 +25,12 @@ export function AppProvider({ children }) {
 
   // ── State: Kênh truyền ────────────────────────────────────────────────────
   const [transmitted, setTransmitted] = useState(false); // Alice đã nhấn "Gửi" chưa?
-  const [tampered, setTampered] = useState(false);       // Toggle giả lập tấn công MITM
+  const [tampered, setTampered] = useState(false); // Toggle giả lập tấn công MITM
 
   // ── State: Phía Bob (người xác minh) ─────────────────────────────────────
-  const [hashHB, setHashHB] = useState("");             // SHA-256 file Bob nhận được
+  const [hashHB, setHashHB] = useState(""); // SHA-256 file Bob nhận được
   const [hashHARecovered, setHashHARecovered] = useState(""); // H_A giải mã từ chữ ký
-  const [isValid, setIsValid] = useState(null);         // true | false | null
+  const [isValid, setIsValid] = useState(null); // true | false | null
   const [verifyLoading, setVerifyLoading] = useState(false);
 
   // ─── Action: Reset về trạng thái ban đầu ──────────────────────────────────
@@ -154,8 +139,11 @@ export function AppProvider({ children }) {
       if (tampered) {
         const buf = await aliceFile.arrayBuffer();
         const blob = new Blob(
-          [buf, new TextEncoder().encode("\n[NỘI DUNG ĐÃ BỊ KẺ TẤN CÔNG SỬA ĐỔI!]")],
-          { type: aliceFile.type }
+          [
+            buf,
+            new TextEncoder().encode("\n[NỘI DUNG ĐÃ BỊ KẺ TẤN CÔNG SỬA ĐỔI!]"),
+          ],
+          { type: aliceFile.type },
         );
         fileToSend = new File([blob], aliceFile.name, { type: aliceFile.type });
       }
@@ -218,9 +206,6 @@ export function AppProvider({ children }) {
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 
-// ─── 3. Custom Hook: useAppContext() ──────────────────────────────────────────
-// Dùng hook này trong bất kỳ component con nào để lấy state và action.
-// Bắt lỗi ngay nếu component được dùng ngoài <AppProvider>.
 export function useAppContext() {
   const ctx = useContext(AppContext);
   if (!ctx) {
