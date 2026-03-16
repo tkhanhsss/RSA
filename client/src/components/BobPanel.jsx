@@ -219,8 +219,7 @@ export default function BobPanel() {
                     ❌ Chữ ký không hợp lệ
                   </p>
                   <p className="text-xs text-gray-400 mt-2 leading-relaxed">
-                    File tài liệu đã bị thay đổi hoặc chữ ký không khớp với khóa
-                    công khai
+                    File tài liệu đã bị thay đổi hoặc giả mạo
                   </p>
                 </>
               )}
