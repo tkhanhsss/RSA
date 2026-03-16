@@ -27,7 +27,7 @@ export default function AlicePanel() {
             Alice — Người ký
           </h2>
           <p className="text-xs text-gray-500">
-            Dùng Khóa bí mật để ký tài liệu
+            Dùng Khóa bí mật để ký file tài liệu
           </p>
         </div>
       </div>
@@ -35,7 +35,7 @@ export default function AlicePanel() {
       {/* Bước 1: Upload file */}
       <StepCard
         number="1"
-        title="Upload file hợp đồng"
+        title="Upload file"
         active={keysGenerated}
         done={!!aliceFile}
         theme="blue"
@@ -78,7 +78,7 @@ export default function AlicePanel() {
       {/* Bước 2: SHA-256 — H(M) */}
       <StepCard
         number="2"
-        title="Băm tài liệu bằng SHA-256 → H(M)"
+        title="Băm file tài liệu bằng SHA-256 → H(M)"
         active={!!aliceFile && !hashHA}
         done={!!hashHA}
         theme="blue"
@@ -86,7 +86,7 @@ export default function AlicePanel() {
         {hashHA ? (
           <div className="space-y-1.5">
             <HashBox
-              label="H(M) = SHA-256(file_hợp_đồng)"
+              label="H(M) = SHA-256(file)"
               value={hashHA}
               colorClass="text-blue-300"
             />
@@ -94,12 +94,12 @@ export default function AlicePanel() {
           </div>
         ) : (
           <p className="text-xs text-gray-500 italic">
-            H(M) sẽ hiển thị sau khi nhấn ký tài liệu
+            H(M) sẽ hiển thị sau khi nhấn "Ký file"
           </p>
         )}
       </StepCard>
 
-      {/* Bước 3: Ký tài liệu — Chữ ký số */}
+      {/* Bước 3: Ký file — Chữ ký số */}
       <StepCard
         number="3"
         title="Mã hóa H(M) bằng Khóa bí mật → Chữ ký"
@@ -118,7 +118,7 @@ export default function AlicePanel() {
             ) : (
               <Lock className="w-4 h-4" />
             )}
-            {signLoading ? "Đang tạo chữ ký..." : "Ký tài liệu"}
+            {signLoading ? "Đang tạo chữ ký..." : "Ký file tài liệu"}
           </button>
         ) : (
           <div className="space-y-2">

@@ -42,10 +42,10 @@ export default function BobPanel() {
         </div>
       </div>
 
-      {/* Bước 1: Nhận file + chữ ký từ Alice */}
+      {/* Bước 1: Nhận file tài liệu + chữ ký từ Alice */}
       <StepCard
         number="1"
-        title="Nhận file hợp đồng + Chữ ký từ Alice"
+        title="Nhận file tài liệu + Chữ ký từ Alice"
         active={transmitted}
         done={transmitted}
         theme="green"
@@ -93,7 +93,7 @@ export default function BobPanel() {
       {/* Bước 2: SHA-256 file nhận được → H(M') */}
       <StepCard
         number="2"
-        title="Băm file nhận được bằng SHA-256 → H(M')"
+        title="Băm file tài liệu nhận được bằng SHA-256 → H(M')"
         active={transmitted && !hashHB && isValid === null}
         done={!!hashHB}
         theme="green"
@@ -203,10 +203,10 @@ export default function BobPanel() {
                     H(M) = H(M')
                   </p>
                   <p className="text-green-300 font-bold text-base mt-1">
-                    ✅ Chữ ký HỢP LỆ
+                    ✅ Chữ ký hợp lệ
                   </p>
                   <p className="text-xs text-gray-400 mt-2 leading-relaxed">
-                    Tài liệu còn nguyên vẹn, xác nhận chắc chắn do Alice ký
+                    File tài liệu còn nguyên vẹn, xác nhận chắc chắn do Alice ký
                   </p>
                 </>
               ) : (
@@ -216,11 +216,11 @@ export default function BobPanel() {
                     H(M) ≠ H(M')
                   </p>
                   <p className="text-red-300 font-bold text-base mt-1">
-                    ❌ Chữ ký KHÔNG HỢP LỆ
+                    ❌ Chữ ký không hợp lệ
                   </p>
                   <p className="text-xs text-gray-400 mt-2 leading-relaxed">
-                    Tài liệu đã bị thay đổi hoặc chữ ký không khớp với khóa công
-                    khai
+                    File tài liệu đã bị thay đổi hoặc chữ ký không khớp với khóa
+                    công khai
                   </p>
                 </>
               )}

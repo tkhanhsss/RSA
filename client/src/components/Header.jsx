@@ -12,7 +12,7 @@ export default function Header() {
             Demo Chữ Ký Số RSA
           </h1>
           <p className="text-sm text-gray-400 mt-0.5">
-            Minh họa trực quan quy trình ký và xác minh tài liệu bằng RSA +
+            Minh họa trực quan quy trình ký và xác minh file tài liệu bằng RSA +
             SHA-256
           </p>
         </div>

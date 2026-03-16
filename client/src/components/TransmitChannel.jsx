@@ -55,15 +55,15 @@ export default function TransmitChannel() {
           }`}
         >
           <span
-            className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 ${
-              tampered ? "translate-x-5" : "translate-x-0.5"
+            className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-300 ${
+              tampered ? "translate-x-5" : ""
             }`}
           />
         </button>
         {tampered && (
-          <div className="text-xs text-red-400 flex items-center gap-0.5">
+          <div className="text-xs text-red-400 flex items-center gap-0.5 cursor-default select-none bg-red-950/50 border border-red-800/40 rounded px-1.5 py-0.5 pointer-events-none">
             <AlertTriangle className="w-3 h-3" />
-            Sửa
+            <span>Sửa</span>
           </div>
         )}
       </div>
