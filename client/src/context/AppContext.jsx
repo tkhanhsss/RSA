@@ -161,9 +161,9 @@ export function AppProvider({ children }) {
       setIsValid(data.isValid);
 
       if (data.isValid) {
-        toast.success("✅ Chữ ký HỢP LỆ — tài liệu nguyên vẹn!");
+        toast.success("✅ Chữ ký hợp lệ — tài liệu nguyên vẹn!");
       } else {
-        toast.error("❌ Chữ ký KHÔNG HỢP LỆ — tài liệu bị sửa đổi!");
+        toast.error("❌ Chữ ký không hợp lệ — tài liệu bị sửa đổi!");
       }
     } catch {
       toast.error("Lỗi khi xác minh chữ ký!");
